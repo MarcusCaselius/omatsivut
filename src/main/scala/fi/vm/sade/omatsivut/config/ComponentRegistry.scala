@@ -2,6 +2,7 @@ package fi.vm.sade.omatsivut.config
 
 import java.util.concurrent.Executors
 
+import fi.vm.sade.auditlog.{ApplicationType, Audit}
 import fi.vm.sade.groupemailer.{GroupEmailComponent, GroupEmailService}
 import fi.vm.sade.hakemuseditori.HakemusEditoriComponent
 import fi.vm.sade.hakemuseditori.auditlog.{AuditContext, AuditLogger, AuditLoggerComponent}
@@ -100,6 +101,7 @@ class ComponentRegistry(val config: AppConfig)
   val koodistoService: KoodistoService = configureKoodistoService
   val groupEmailService: GroupEmailService = configureGroupEmailService
   val captchaService: CaptchaService = new RemoteCaptchaService(config.settings.captchaSettings)
+  val audit: Audit = new Audit("omatsivut", ApplicationType.VIRKAILIJA)
 
   def muistilistaService(language: Language): MuistilistaService = new MuistilistaService(language)
   def newApplicationValidator: ApplicationValidator = new ApplicationValidator
