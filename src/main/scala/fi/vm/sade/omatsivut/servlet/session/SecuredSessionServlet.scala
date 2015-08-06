@@ -8,7 +8,6 @@ import fi.vm.sade.omatsivut.security.AuthenticationInfoParser._
 import fi.vm.sade.omatsivut.servlet.OmatSivutServletBase
 
 trait SecuredSessionServletContainer {
-  val auditLogger: AuditLogger
   val audit: Audit
 
   class SecuredSessionServlet(val authenticationContext: AuthenticationContext) extends OmatSivutServletBase with ShibbolethPaths {
@@ -16,8 +15,7 @@ trait SecuredSessionServletContainer {
       val info = getAuthenticationInfo(request)
       info.personOid match {
         case (Some(oid)) => {
-          audit.log(new LogMessage(oid, "", info.toString))
-          auditLogger.log(Login(info))
+          audit.log(new LogMessage(oid, info.toString))
           response.redirect(redirectUri)
         }
         case _ => redirectToShibbolethLogin(response, authenticationContext.ssoContextPath)
