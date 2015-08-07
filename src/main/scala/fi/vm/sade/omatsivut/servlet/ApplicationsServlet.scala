@@ -1,5 +1,6 @@
 package fi.vm.sade.omatsivut.servlet
 
+import fi.vm.sade.auditlog.LogMessage
 import fi.vm.sade.hakemuseditori.domain.Language
 import fi.vm.sade.hakemuseditori.user.Oppija
 import fi.vm.sade.hakemuseditori.{HakemusEditoriUserContext, UpdateResult, HakemusEditoriComponent}
@@ -87,7 +88,7 @@ trait ApplicationsServletContainer {
           valintatulosService.vastaanota(hakemusOid, hakuOid, vastaanotto)
         }
         if(ret) {
-          auditLogger.log(SaveVastaanotto(personOid(), hakemusOid, hakuOid, vastaanotto))
+          audit.log(new LogMessage(personOid(), SaveVastaanotto(personOid(), hakemusOid, hakuOid, vastaanotto).toLogMessage))
           hakemusRepository.getHakemus(hakemusOid) match {
             case Some(hakemus) => hakemus
             case _ => NotFound("error" -> "Not found")

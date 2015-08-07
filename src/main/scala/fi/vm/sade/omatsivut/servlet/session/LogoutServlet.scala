@@ -2,6 +2,7 @@ package fi.vm.sade.omatsivut.servlet.session
 
 import javax.servlet.http.HttpServletRequest
 
+import fi.vm.sade.auditlog.LogMessage
 import fi.vm.sade.hakemuseditori.auditlog.{AuditLogger, AuditLoggerComponent}
 import fi.vm.sade.omatsivut.auditlog.Logout
 import fi.vm.sade.omatsivut.security.AuthenticationContext
@@ -20,7 +21,7 @@ trait LogoutServletContainer {
     }
 
     def sendLogOut {
-      auditLogger.log(Logout(getAuthenticationInfo(request)))
+      audit.log(new LogMessage("", Logout(getAuthenticationInfo(request)).toLogMessage))
       redirectToShibbolethLogout(request, response)
     }
 
