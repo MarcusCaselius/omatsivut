@@ -101,6 +101,7 @@ class ComponentRegistry(val config: AppConfig)
   val koodistoService: KoodistoService = configureKoodistoService
   val groupEmailService: GroupEmailService = configureGroupEmailService
   val captchaService: CaptchaService = new RemoteCaptchaService(config.settings.captchaSettings)
+  val audit: Audit = new Audit("omatsivut", ApplicationType.VIRKAILIJA)
 
   def muistilistaService(language: Language): MuistilistaService = new MuistilistaService(language)
   def newApplicationValidator: ApplicationValidator = new ApplicationValidator

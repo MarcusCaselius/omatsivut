@@ -55,6 +55,7 @@ object OmatSivutSpringContext extends Logging {
     "fi.vm.sade.haku.oppija.common.koulutusinformaatio.impl"
   ))
   @Import(Array(classOf[OmatSivutMongoConfiguration], classOf[OmatSivutCacheConfiguration]))
+  @ImportResource(Array("/META-INF/spring/logger-mock-context.xml"))
   class Dev extends OmatSivutConfiguration {
     val profile = "dev"
 
@@ -76,6 +77,7 @@ object OmatSivutSpringContext extends Logging {
     "fi.vm.sade.haku.virkailija.lomakkeenhallinta.i18n",
     "fi.vm.sade.haku.oppija.common.organisaatio"
   ))
+  @ImportResource(Array("/META-INF/spring/logger-context.xml"))
   @Import(Array(classOf[OmatSivutMongoConfiguration], classOf[OmatSivutCacheConfiguration]))
   class Default extends OmatSivutConfiguration {
     val profile = "default"
